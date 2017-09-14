@@ -87,11 +87,42 @@ class BinarySearchTree
 
   def in_order_traversal(tree_node = @root, arr = [])
     return [] if tree_node.nil?
-    arr = in_order_traversal(tree_node.left, arr) if tree_node.left
+    in_order_traversal(tree_node.left, arr) if tree_node.left
     arr << tree_node.value
-    arr = in_order_traversal(tree_node.right, arr) if tree_node.right
+    in_order_traversal(tree_node.right, arr) if tree_node.right
+    arr
+    # return [] if tree_node.nil?
+    # arr = in_order_traversal(tree_node.left, arr) if tree_node.left
+    # arr << tree_node.value
+    # arr = in_order_traversal(tree_node.right, arr) if tree_node.right
+    # arr
+  end
+
+  def count_leafs(node = @root, count = 0)
+    # debugger
+    return count if node.nil?
+    count += 1 if node.left.nil? && node.right.nil?
+    count_leafs(node.left, count)
+    count_leafs(node.right, count)
+    count
+  end
+
+  def pre_order_traversal(tree_node = @root, arr = [])
+    return arr if tree_node.nil?
+    arr.push(tree_node.value)
+    pre_order_traversal(tree_node.left, arr)
+    pre_order_traversal(tree_node.right, arr)
     arr
   end
+
+  def post_order_traversal(tree_node = @root, arr = [])
+  return arr if tree_node.nil?
+  return arr.push(tree_node.value) if tree_node.left.nil? && tree_node.right.nil?
+  post_order_traversal(tree_node.left, arr)
+  post_order_traversal(tree_node.right, arr)
+  arr.push(tree_node.value)
+  # p arr
+end
 
 
   private
@@ -117,3 +148,12 @@ class BinarySearchTree
 
 
 end
+
+bst = BinarySearchTree.new
+[5, 3, 7, 2, 4, 1, 10, 9, 11].each do |el|
+  bst.insert(el)
+end
+p bst.root
+p bst.count_leafs
+p bst.pre_order_traversal
+p bst.post_order_traversal
