@@ -100,10 +100,9 @@ class BinarySearchTree
 
   def count_leafs(node = @root, count = 0)
     # debugger
-    return count if node.nil?
-    count += 1 if node.left.nil? && node.right.nil?
-    count_leafs(node.left, count)
-    count_leafs(node.right, count)
+    return 0 if node.nil?
+    return 1 if node.left.nil? && node.right.nil?
+    count = count_leafs(node.left, count) + count_leafs(node.right, count)
     count
   end
 
